@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart | FurnitureShow</title>
+<meta name="description" content="Review your FurnitureShow cart.">
+<link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<script src="assets/js/products.js"></script>
+<script src="assets/js/main.js"></script>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="topbar"><div class="container">
+  <span>🇺🇸 Free shipping across the contiguous United States</span>
+  <span>Need help? Call us Mon–Sat, 8am–8pm CT: <a href="tel:+18005550143">(800) 555-0143</a></span>
+</div></div>
+<header class="site"><div class="header-inner">
+  <a class="logo" href="index.html"><img src="assets/img/logo.svg" alt="FurnitureShow logo" width="40" height="40">Furniture<span class="tld">Show</span></a>
+  <nav class="main" aria-label="Main navigation"><a href="index.html" class="">Home</a><a href="shop.html" class="">Shop</a><a href="packages.html" class="">Furniture Packages</a><a href="blog.html" class="">Blog</a><a href="about.html" class="">About</a><a href="contact.html" class="">Contact</a></nav>
+  <div class="header-tools">
+    <a class="cart-link" href="cart.html">Cart <span class="cart-count">0</span></a>
+  </div>
+</div></header>
+<main id="main">
+<section class="page-hero"><div class="container">
+<div class="crumbs"><a href="index.html">Home</a> / Cart</div>
+<h1>Your Cart</h1><p class="lead muted" style="max-width:640px;margin-top:10px">Review your items, then check out securely. Every order includes our 30-day comfort trial.</p>
+</div></section>
+<section class="section" style="padding-top:44px"><div class="container cart-layout">
+  <div id="cart-items"></div>
+  <div class="summary">
+    <h3 style="margin-bottom:12px">Order Summary</h3>
+    <div class="row"><span>Subtotal</span><b id="c-sub">$0</b></div>
+    <div class="row"><span>Shipping</span><b style="color:var(--forest)">FREE</b></div>
+    <div class="row"><span>Estimated tax</span><b id="c-tax">$0</b></div>
+    <div class="row total"><span>Total</span><span id="c-total">$0</span></div>
+    <a class="btn btn-primary btn-block" style="margin-top:16px" href="checkout.html">Proceed to Secure Checkout</a>
+    <p class="small muted center" style="margin-top:12px">🔒 256-bit SSL encrypted · Visa, Mastercard, Amex, Apple Pay</p>
+  </div>
+</div></section>
+<script>
+function renderCart(){
+  const c = FS.cart(), box = document.getElementById('cart-items');
+  if(!c.length){ box.innerHTML = '<div class="panel center"><h2>Your cart is empty</h2><p class="muted" style="margin:10px 0 20px">Browse our best-selling furniture to get started.</p><a class="btn btn-primary" href="shop.html">Shop Furniture</a></div>'; }
+  else box.innerHTML = c.map(i=>{ const p=PRODUCTS.find(x=>x.id===i.id); return `
+    <div class="cart-item">
+      <a href="product.html?id=${p.id}"><img src="${p.img}" alt="${p.name}"></a>
+      <div><h3 style="font-size:1.05rem"><a href="product.html?id=${p.id}">${p.name}</a></h3>
+        <p class="small muted">Color: ${i.color}</p>
+        <div class="qty" style="margin-top:8px">
+          <button onclick="upd('${i.key}',-1)" aria-label="Decrease">−</button>
+          <input value="${i.qty}" readonly aria-label="Quantity">
+          <button onclick="upd('${i.key}',1)" aria-label="Increase">+</button>
+        </div></div>
+      <div style="text-align:right"><b style="font-size:1.15rem">${money(p.price*i.qty)}</b><br>
+        <button class="small" style="background:none;border:none;color:var(--clay);cursor:pointer;text-decoration:underline;margin-top:8px" onclick="del('${i.key}')">Remove</button></div>
+    </div>`;}).join('');
+  const sub = c.reduce((s,i)=>s + PRODUCTS.find(x=>x.id===i.id).price*i.qty, 0);
+  const tax = Math.round(sub*0.08*100)/100;
+  document.getElementById('c-sub').textContent = money(sub);
+  document.getElementById('c-tax').textContent = money(tax);
+  document.getElementById('c-total').textContent = money(sub+tax);
+}
+function upd(key,d){ const c=FS.cart(); const it=c.find(i=>i.key===key); it.qty=Math.max(1,it.qty+d); FS.save(c); renderCart(); }
+function del(key){ FS.save(FS.cart().filter(i=>i.key!==key)); renderCart(); }
+renderCart();
+</script>
+
+</main>
+<footer class="site"><div class="container">
+<div class="footer-grid">
+  <div>
+    <a class="logo" href="index.html" style="color:#fff"><img src="assets/img/logo.svg" alt="" width="36" height="36">Furniture<span class="tld">Show</span></a>
+    <p class="small" style="margin-top:14px;max-width:320px">Thoughtfully crafted furniture for American homes — with senior-friendly design, honest prices, and white-glove delivery.</p>
+    <div class="pay-pills"><span>VISA</span><span>MASTERCARD</span><span>AMEX</span><span>DISCOVER</span><span>APPLE PAY</span><span>STRIPE</span></div>
+  </div>
+  <div><h4>Shop</h4><ul>
+    <li><a href="shop.html?cat=living">Living Room</a></li><li><a href="shop.html?cat=bedroom">Bedroom</a></li>
+    <li><a href="shop.html?cat=dining">Dining</a></li><li><a href="shop.html?cat=office">Home Office</a></li>
+    <li><a href="shop.html?cat=senior">Senior Comfort</a></li><li><a href="packages.html">Whole-Home Packages</a></li></ul></div>
+  <div><h4>Company</h4><ul>
+    <li><a href="about.html">About Us</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li>
+    <li><a href="faq.html">FAQ</a></li><li><a href="accessibility.html">Accessibility</a></li></ul></div>
+  <div><h4>Legal & Support</h4><ul>
+    <li><a href="shipping-returns.html">Shipping & Returns</a></li><li><a href="refund-policy.html">Refund Policy</a></li>
+    <li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms-of-service.html">Terms of Service</a></li>
+    <li><a href="cookie-policy.html">Cookie Policy</a></li></ul></div>
+</div></div>
+<div class="footer-bottom">
+  <span>© <span data-year>2026</span> FurnitureShow LLC · furnitureshow.site · All rights reserved.</span>
+  <span>FurnitureShow LLC · 1420 Harvest Lane, Suite 200, Austin, TX 78701</span>
+</div></footer>
+</body></html>

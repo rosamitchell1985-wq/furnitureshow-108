@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product | FurnitureShow</title>
+<meta name="description" content="Shop furniture at FurnitureShow.">
+<link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<script src="assets/js/products.js"></script>
+<script src="assets/js/main.js"></script>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="topbar"><div class="container">
+  <span>🇺🇸 Free shipping across the contiguous United States</span>
+  <span>Need help? Call us Mon–Sat, 8am–8pm CT: <a href="tel:+18005550143">(800) 555-0143</a></span>
+</div></div>
+<header class="site"><div class="header-inner">
+  <a class="logo" href="index.html"><img src="assets/img/logo.svg" alt="FurnitureShow logo" width="40" height="40">Furniture<span class="tld">Show</span></a>
+  <nav class="main" aria-label="Main navigation"><a href="index.html" class="">Home</a><a href="shop.html" class="active">Shop</a><a href="packages.html" class="">Furniture Packages</a><a href="blog.html" class="">Blog</a><a href="about.html" class="">About</a><a href="contact.html" class="">Contact</a></nav>
+  <div class="header-tools">
+    <a class="cart-link" href="cart.html">Cart <span class="cart-count">0</span></a>
+  </div>
+</div></header>
+<main id="main">
+
+<section class="section" style="padding-top:40px"><div class="container">
+  <div class="crumbs"><a href="index.html">Home</a> / <a href="shop.html">Shop</a> / <span id="crumb">Product</span></div>
+  <div class="pd-layout">
+    <div class="pd-gallery"><img id="pd-img" src="" alt="" style="width:100%"></div>
+    <div class="pd-info">
+      <span class="eyebrow" id="pd-cat"></span>
+      <h1 id="pd-name"></h1>
+      <div class="stars" id="pd-stars"></div>
+      <div class="price-row" style="margin:14px 0"><span class="price" id="pd-price"></span><span class="old-price" id="pd-old"></span></div>
+      <p class="muted" id="pd-short"></p>
+      <p style="margin-top:14px"><b>Color:</b> <span id="pd-color-name" class="muted"></span></p>
+      <div class="swatches" id="pd-swatches"></div>
+      <div style="display:flex;gap:14px;align-items:center;margin:22px 0;flex-wrap:wrap">
+        <div class="qty">
+          <button type="button" onclick="pdQty(-1)" aria-label="Decrease quantity">−</button>
+          <input id="pd-qty" value="1" inputmode="numeric" aria-label="Quantity">
+          <button type="button" onclick="pdQty(1)" aria-label="Increase quantity">+</button>
+        </div>
+        <button class="btn btn-primary" style="flex:1;min-width:220px" onclick="pdAdd()">Add to Cart</button>
+      </div>
+      <div class="feature-list" style="margin-top:6px">
+        <div><b>🚚 Free US Shipping</b><span class="small muted">Arrives in 5–9 business days</span></div>
+        <div><b>↩️ 30-Day Trial</b><span class="small muted">Free pickup if it's not right</span></div>
+        <div><b>🔧 Easy Assembly</b><span class="small muted">Most pieces in under 30 minutes</span></div>
+        <div><b>🛡 Long Warranty</b><span class="small muted" id="pd-warranty">Up to 10 years</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab-btns" role="tablist">
+      <button class="on" data-tab="t1" role="tab">Description</button>
+      <button data-tab="t2" role="tab">Specifications</button>
+      <button data-tab="t3" role="tab">Shipping & Returns</button>
+    </div>
+    <div class="tab-panel on" id="t1"><p id="pd-desc"></p></div>
+    <div class="tab-panel" id="t2"><table class="spec-table" id="pd-specs"></table></div>
+    <div class="tab-panel" id="t3">
+      <p><b>Free standard shipping</b> to all 48 contiguous US states (5–9 business days). Alaska & Hawaii: calculated at checkout. White-glove delivery (room of choice, setup, packaging removal) available for $99 on eligible items.</p>
+      <p><b>30-day comfort trial:</b> if you're not happy, we'll arrange free pickup and refund you in full — no restocking fees. Items must be in good condition. See our <a href="shipping-returns.html">Shipping & Returns</a> and <a href="refund-policy.html">Refund Policy</a> for details.</p>
+    </div>
+  </div>
+
+  <section style="margin-top:64px">
+    <h2>You may also like</h2>
+    <div class="grid-4" id="related" style="margin-top:22px"></div>
+  </section>
+</div></section>
+<script>
+const pid = new URLSearchParams(location.search).get('id') || 'p1';
+const P = PRODUCTS.find(p=>p.id===pid) || PRODUCTS[0];
+let color = P.colors[0];
+const names = {"#4C7A63":"Forest Green","#2E4B3F":"Deep Forest","#7A9E8E":"Sage","#B05C5C":"Terracotta Red","#5A5248":"Charcoal","#8A6A45":"Walnut","#6E5236":"Dark Walnut","#5A4230":"Espresso","#C4693B":"Clay","#A5532B":"Burnt Clay","#E8C9A8":"Sand","#D9A441":"Honey Oak"};
+const cname = h => names[h] || "Classic";
+document.getElementById('crumb').textContent = P.name;
+document.getElementById('pd-cat').textContent = CATS[P.cat];
+document.getElementById('pd-name').textContent = P.name;
+document.getElementById('pd-stars').innerHTML = FS.stars(P.rating) + ' <span class="meta">'+P.reviews+' verified reviews</span>';
+document.getElementById('pd-price').textContent = money(P.price);
+document.getElementById('pd-old').textContent = P.old ? money(P.old) : '';
+document.getElementById('pd-short').textContent = P.short;
+document.getElementById('pd-desc').textContent = P.desc;
+document.getElementById('pd-img').src = P.img;
+document.getElementById('pd-img').alt = P.name + ' — product photo';
+document.getElementById('pd-warranty').textContent = P.specs["Warranty"] || 'Up to 10 years';
+document.title = P.name + ' | FurnitureShow';
+document.getElementById('pd-specs').innerHTML = Object.entries(P.specs).map(([k,v])=>'<tr><td>'+k+'</td><td>'+v+'</td></tr>').join('');
+function drawSwatches(){
+  document.getElementById('pd-swatches').innerHTML = P.colors.map(h=>'<button class="swatch '+(h===color?'on':'')+'" style="background:'+h+'" onclick="setColor(\''+h+'\')" aria-label="Color '+cname(h)+'"></button>').join('');
+  document.getElementById('pd-color-name').textContent = cname(color);
+}
+function setColor(h){ color=h; drawSwatches(); }
+drawSwatches();
+function pdQty(d){ const i=document.getElementById('pd-qty'); i.value = Math.max(1,(parseInt(i.value)||1)+d); }
+function pdAdd(){ FS.add(P.id, parseInt(document.getElementById('pd-qty').value)||1, color); }
+document.querySelectorAll('.tab-btns button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.tab-btns button').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); document.getElementById(b.dataset.tab).classList.add('on');
+}));
+document.getElementById('related').innerHTML = PRODUCTS.filter(p=>p.id!==P.id && p.cat===P.cat)
+  .concat(PRODUCTS.filter(p=>p.id!==P.id && p.cat!==P.cat)).slice(0,4).map(productCard).join('');
+</script>
+
+</main>
+<footer class="site"><div class="container">
+<div class="footer-grid">
+  <div>
+    <a class="logo" href="index.html" style="color:#fff"><img src="assets/img/logo.svg" alt="" width="36" height="36">Furniture<span class="tld">Show</span></a>
+    <p class="small" style="margin-top:14px;max-width:320px">Thoughtfully crafted furniture for American homes — with senior-friendly design, honest prices, and white-glove delivery.</p>
+    <div class="pay-pills"><span>VISA</span><span>MASTERCARD</span><span>AMEX</span><span>DISCOVER</span><span>APPLE PAY</span><span>STRIPE</span></div>
+  </div>
+  <div><h4>Shop</h4><ul>
+    <li><a href="shop.html?cat=living">Living Room</a></li><li><a href="shop.html?cat=bedroom">Bedroom</a></li>
+    <li><a href="shop.html?cat=dining">Dining</a></li><li><a href="shop.html?cat=office">Home Office</a></li>
+    <li><a href="shop.html?cat=senior">Senior Comfort</a></li><li><a href="packages.html">Whole-Home Packages</a></li></ul></div>
+  <div><h4>Company</h4><ul>
+    <li><a href="about.html">About Us</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li>
+    <li><a href="faq.html">FAQ</a></li><li><a href="accessibility.html">Accessibility</a></li></ul></div>
+  <div><h4>Legal & Support</h4><ul>
+    <li><a href="shipping-returns.html">Shipping & Returns</a></li><li><a href="refund-policy.html">Refund Policy</a></li>
+    <li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms-of-service.html">Terms of Service</a></li>
+    <li><a href="cookie-policy.html">Cookie Policy</a></li></ul></div>
+</div></div>
+<div class="footer-bottom">
+  <span>© <span data-year>2026</span> FurnitureShow LLC · furnitureshow.site · All rights reserved.</span>
+  <span>FurnitureShow LLC · 1420 Harvest Lane, Suite 200, Austin, TX 78701</span>
+</div></footer>
+</body></html>

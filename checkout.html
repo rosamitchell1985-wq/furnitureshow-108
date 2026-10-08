@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Checkout | FurnitureShow</title>
+<meta name="description" content="Secure checkout — FurnitureShow.">
+<link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<script src="assets/js/products.js"></script>
+<script src="assets/js/main.js"></script>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="topbar"><div class="container">
+  <span>🇺🇸 Free shipping across the contiguous United States</span>
+  <span>Need help? Call us Mon–Sat, 8am–8pm CT: <a href="tel:+18005550143">(800) 555-0143</a></span>
+</div></div>
+<header class="site"><div class="header-inner">
+  <a class="logo" href="index.html"><img src="assets/img/logo.svg" alt="FurnitureShow logo" width="40" height="40">Furniture<span class="tld">Show</span></a>
+  <nav class="main" aria-label="Main navigation"><a href="index.html" class="">Home</a><a href="shop.html" class="">Shop</a><a href="packages.html" class="">Furniture Packages</a><a href="blog.html" class="">Blog</a><a href="about.html" class="">About</a><a href="contact.html" class="">Contact</a></nav>
+  <div class="header-tools">
+    <a class="cart-link" href="cart.html">Cart <span class="cart-count">0</span></a>
+  </div>
+</div></header>
+<main id="main">
+
+<section class="section" style="padding-top:40px"><div class="container">
+<div class="secure-head"><span class="lock">🔒 Secure Checkout</span><span class="muted small">Payments are encrypted end-to-end and processed by Stripe. FurnitureShow never stores your card number.</span></div>
+<div class="checkout-layout">
+  <div>
+    <div class="panel"><h3 style="margin-bottom:16px">1 · Contact</h3>
+      <div class="field"><label for="email">Email address</label><input id="email" type="email" required placeholder="you@example.com"></div>
+      <div class="field"><label for="phone">Phone (for delivery updates)</label><input id="phone" type="tel" required placeholder="(555) 000-0000"></div>
+    </div>
+    <div class="panel"><h3 style="margin-bottom:16px">2 · Shipping Address</h3>
+      <div class="field"><label for="name">Full name</label><input id="name" required placeholder="Jane Cooper"></div>
+      <div class="field"><label for="addr">Street address</label><input id="addr" required placeholder="123 Maple Street, Apt 4"></div>
+      <div class="field-row">
+        <div class="field"><label for="city">City</label><input id="city" required placeholder="Austin"></div>
+        <div class="field"><label for="state">State</label><select id="state"><option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option></select></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label for="zip">ZIP code</label><input id="zip" required placeholder="78701" inputmode="numeric" maxlength="10"></div>
+        <div class="field"><label for="delivery">Delivery speed</label>
+          <select id="delivery"><option value="0">Standard — FREE (5–9 days)</option><option value="99">White-Glove — $99 (room of choice + setup)</option></select></div>
+      </div>
+    </div>
+    <div class="panel"><h3 style="margin-bottom:6px">3 · Payment</h3>
+    
+      <div class="pay-card">
+        <div class="row-full"><input id="cc-num" placeholder="Card number" inputmode="numeric" maxlength="19" autocomplete="cc-number"></div>
+        <div class="row-split">
+          <div><input id="cc-exp" placeholder="MM / YY" maxlength="7" inputmode="numeric" autocomplete="cc-exp"></div>
+          <div><input id="cc-cvc" placeholder="CVC" maxlength="4" inputmode="numeric" autocomplete="cc-csc"></div>
+        </div>
+      </div>
+      <div class="field" style="margin-top:16px"><label for="cc-name">Name on card</label><input id="cc-name" autocomplete="cc-name" placeholder="JANE M COOPER"></div>
+      <div class="field"><label for="cc-zip">Billing ZIP code</label><input id="cc-zip" placeholder="78701" inputmode="numeric" maxlength="10"></div>
+      <div class="pay-note"><span aria-hidden="true">🛡</span><span>Powered by <b>Stripe</b> · PCI DSS Level 1 compliant · 3-D Secure for your protection</span></div>
+    </div>
+  </div>
+  <div class="summary">
+    <h3 style="margin-bottom:12px">Your Order</h3>
+    <div id="co-items"></div>
+    <div class="row"><span>Subtotal</span><b id="co-sub">$0</b></div>
+    <div class="row"><span>Shipping</span><b id="co-ship" style="color:var(--forest)">FREE</b></div>
+    <div class="row"><span>Estimated tax (8%)</span><b id="co-tax">$0</b></div>
+    <div class="row total"><span>Total</span><span id="co-total">$0</span></div>
+    <button class="btn btn-primary btn-block" style="margin-top:16px" onclick="placeOrder()">Pay Now</button>
+    <p class="small muted center" style="margin-top:12px">By paying you agree to our <a href="terms-of-service.html">Terms</a> and <a href="refund-policy.html">Refund Policy</a>.</p>
+  </div>
+</div>
+<div id="confirm" style="display:none"></div>
+</div></section>
+<script>
+(function(){
+  const c = FS.cart(), box = document.getElementById('co-items');
+  if(!c.length){ box.innerHTML = '<p class="small muted" style="margin-bottom:12px">Your cart is empty — <a href="shop.html">continue shopping</a>.</p>'; }
+  else box.innerHTML = c.map(i=>{ const p=PRODUCTS.find(x=>x.id===i.id);
+    return '<div class="row" style="font-size:.92rem"><span>'+p.name+' × '+i.qty+'</span><b>'+money(p.price*i.qty)+'</b></div>';}).join('');
+})();
+function totals(){
+  const sub = FS.cart().reduce((s,i)=>s + PRODUCTS.find(x=>x.id===i.id).price*i.qty, 0);
+  const ship = parseInt(document.getElementById('delivery').value);
+  const tax = Math.round(sub*0.08*100)/100;
+  document.getElementById('co-sub').textContent = money(sub);
+  document.getElementById('co-ship').textContent = ship ? money(ship) : 'FREE';
+  document.getElementById('co-tax').textContent = money(tax);
+  document.getElementById('co-total').textContent = money(sub+ship+tax);
+}
+document.getElementById('delivery').addEventListener('change', totals); totals();
+// Card field formatting (Stripe-style)
+document.getElementById('cc-num').addEventListener('input', e=>{
+  e.target.value = e.target.value.replace(/\D/g,'').slice(0,16).replace(/(.{4})/g,'$1 ').trim(); });
+document.getElementById('cc-exp').addEventListener('input', e=>{
+  let v = e.target.value.replace(/\D/g,'').slice(0,4);
+  e.target.value = v.length > 2 ? v.slice(0,2)+' / '+v.slice(2) : v; });
+document.getElementById('cc-cvc').addEventListener('input', e=>{ e.target.value = e.target.value.replace(/\D/g,''); });
+function placeOrder(){
+  const req = ['email','name','addr','city','zip','cc-num','cc-exp','cc-cvc','cc-name','cc-zip'];
+  for(const id of req){ const el = document.getElementById(id);
+    if(!el.value.trim()){ el.focus(); el.style.borderColor = '#B05C5C'; FS.toast('Please complete all required fields.'); return; } }
+  const num = document.getElementById('cc-num').value.replace(/\s/g,'');
+  if(num.length < 15){ FS.toast('Please enter a valid card number.'); return; }
+  const num2 = Math.floor(100000 + Math.random()*900000);
+  localStorage.removeItem('fs_cart'); FS.badge();
+  document.querySelector('.checkout-layout').style.display = 'none';
+  document.querySelector('.secure-head').style.display = 'none';
+  document.getElementById('confirm').style.display = 'block';
+  document.getElementById('confirm').innerHTML =
+    '<div class="confirm-box"><div class="check-mark">✓</div>'+
+    '<h2>Thank you for your order!</h2>'+
+    '<p class="muted" style="margin:12px 0">Order <b>#FS-'+num2+'</b> is confirmed. A receipt and delivery schedule are on their way to your email.</p>'+
+    '<p class="small muted">Delivery window: 5–9 business days. Track your order anytime from your confirmation email.</p>'+
+    '<a class="btn btn-primary" style="margin-top:20px" href="index.html">Back to Home</a></div>';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+
+</main>
+<footer class="site"><div class="container">
+<div class="footer-grid">
+  <div>
+    <a class="logo" href="index.html" style="color:#fff"><img src="assets/img/logo.svg" alt="" width="36" height="36">Furniture<span class="tld">Show</span></a>
+    <p class="small" style="margin-top:14px;max-width:320px">Thoughtfully crafted furniture for American homes — with senior-friendly design, honest prices, and white-glove delivery.</p>
+    <div class="pay-pills"><span>VISA</span><span>MASTERCARD</span><span>AMEX</span><span>DISCOVER</span><span>APPLE PAY</span><span>STRIPE</span></div>
+  </div>
+  <div><h4>Shop</h4><ul>
+    <li><a href="shop.html?cat=living">Living Room</a></li><li><a href="shop.html?cat=bedroom">Bedroom</a></li>
+    <li><a href="shop.html?cat=dining">Dining</a></li><li><a href="shop.html?cat=office">Home Office</a></li>
+    <li><a href="shop.html?cat=senior">Senior Comfort</a></li><li><a href="packages.html">Whole-Home Packages</a></li></ul></div>
+  <div><h4>Company</h4><ul>
+    <li><a href="about.html">About Us</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li>
+    <li><a href="faq.html">FAQ</a></li><li><a href="accessibility.html">Accessibility</a></li></ul></div>
+  <div><h4>Legal & Support</h4><ul>
+    <li><a href="shipping-returns.html">Shipping & Returns</a></li><li><a href="refund-policy.html">Refund Policy</a></li>
+    <li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms-of-service.html">Terms of Service</a></li>
+    <li><a href="cookie-policy.html">Cookie Policy</a></li></ul></div>
+</div></div>
+<div class="footer-bottom">
+  <span>© <span data-year>2026</span> FurnitureShow LLC · furnitureshow.site · All rights reserved.</span>
+  <span>FurnitureShow LLC · 1420 Harvest Lane, Suite 200, Austin, TX 78701</span>
+</div></footer>
+</body></html>
